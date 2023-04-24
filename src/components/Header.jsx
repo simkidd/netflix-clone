@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import '../styles/header.scss'
 
 const Header = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
