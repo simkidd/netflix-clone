@@ -12,12 +12,10 @@ export const MovieProvider = ({ children }) => {
     useEffect(()=>{
         const fetchMovies = async()=>{
             const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
-            console.log(res.data.results)
             setMovies(res.data.results)
         };
         const fetchGenres = async()=>{
             const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`);
-            console.log(res.data.genres)
             setGenres(res.data.genres)
         };
         fetchMovies();
