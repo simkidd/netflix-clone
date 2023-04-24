@@ -16,11 +16,13 @@ export const MovieProvider = ({ children }) => {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
+                const moviesResponse = await axios.get(`${base_url}/movie/now_playing?api_key=${API_KEY}`);
                 const popularMoviesResponse = await axios.get(`${base_url}/movie/popular?api_key=${API_KEY}`);
                 const nowPlayingMoviesResponse = await axios.get(`${base_url}/movie/now_playing?api_key=${API_KEY}`);
                 const topRatedMoviesResponse = await axios.get(`${base_url}/movie/top_rated?api_key=${API_KEY}`);
                 const upcomingMoviesResponse = await axios.get(`${base_url}/movie/upcoming?api_key=${API_KEY}`);
 
+                setMovies(moviesResponse.data.results)
                 setPopularMovies(popularMoviesResponse.data.results);
                 setNowPlayingMovies(nowPlayingMoviesResponse.data.results);
                 setTopRatedMovies(topRatedMoviesResponse.data.results);
@@ -33,7 +35,7 @@ export const MovieProvider = ({ children }) => {
     }, [])
 
     return (
-        <MovieContext.Provider value={{ popularMovies, nowPlayingMovies, topRatedMovies, upcomingMovies }}>
+        <MovieContext.Provider value={{ movies, popularMovies, nowPlayingMovies, topRatedMovies, upcomingMovies }}>
             {children}
         </MovieContext.Provider>
     );
