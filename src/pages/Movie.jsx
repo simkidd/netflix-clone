@@ -8,14 +8,20 @@ const base_url = "https://image.tmdb.org/t/p/original";
 const API_KEY = "ec696be1618e904704c7be1a8fe86470"
 
 const Movie = () => {
+  const [movie, setMovie] = useState("")
   const [showTrailer, setShowTrailer] = useState(false);
   const [trailerKey, setTrailerKey] = useState(null);
   const { id } = useParams();
-  const { movies } = useContext(MovieContext);
+  // const { movies } = useContext(MovieContext);
 
-  const movie = movies.find((movie) => movie.id === parseInt(id))
+  // const movie = movies.find((movie) => movie.id === parseInt(id))
 
   useEffect(() => {
+    const fetchMovie = async () => {
+      const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
+      setMovie(res.data);
+    };
+
     const fetchTrailerKey = async () => {
       const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`);
       const videos = res.data.results;
@@ -24,6 +30,7 @@ const Movie = () => {
         setTrailerKey(trailer.key);
       }
     };
+    fetchMovie();
     fetchTrailerKey();
   }, [id]);
 

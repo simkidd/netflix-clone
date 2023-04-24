@@ -4,26 +4,36 @@ import axios from 'axios';
 export const MovieContext = createContext()
 
 const API_KEY = "ec696be1618e904704c7be1a8fe86470"
+const base_url = "https://api.themoviedb.org/3"
 
 export const MovieProvider = ({ children }) => {
     const [movies, setMovies] = useState([])
-    const [genres, setGenres] = useState([])
+    const [popularMovies, setPopularMovies] = useState([]);
+    const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+    const [topRatedMovies, setTopRatedMovies] = useState([]);
+    const [upcomingMovies, setUpcomingMovies] = useState([]);
 
-    useEffect(()=>{
-        const fetchMovies = async()=>{
-            const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
-            setMovies(res.data.results)
-        };
-        const fetchGenres = async()=>{
-            const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`);
-            setGenres(res.data.genres)
-        };
-        fetchMovies();
-        fetchGenres();
-    },[])
+    useEffect(() => {
+        const fetchMovies = async () => {
+            try {
+                const popularMoviesResponse = await axios.get(`${base_url}/movie/popular?api_key=${API_KEY}`);
+                const nowPlayingMoviesResponse = await axios.get(`${base_url}/movie/now_playing?api_key=${API_KEY}`);
+                const topRatedMoviesResponse = await axios.get(`${base_url}/movie/top_rated?api_key=${API_KEY}`);
+                const upcomingMoviesResponse = await axios.get(`${base_url}/movie/upcoming?api_key=${API_KEY}`);
+
+                setPopularMovies(popularMoviesResponse.data.results);
+                setNowPlayingMovies(nowPlayingMoviesResponse.data.results);
+                setTopRatedMovies(topRatedMoviesResponse.data.results);
+                setUpcomingMovies(upcomingMoviesResponse.data.results);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchMovies()
+    }, [])
 
     return (
-        <MovieContext.Provider value={{movies}}>
+        <MovieContext.Provider value={{ popularMovies, nowPlayingMovies, topRatedMovies, upcomingMovies }}>
             {children}
         </MovieContext.Provider>
     );
