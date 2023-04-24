@@ -19,6 +19,7 @@ const Movie = () => {
         <div className="movie__details">
           <h1>{movie.title}</h1>
           <p>Released: {movie.release_date}</p>
+          <p>{movie.overview}</p>
         </div>
       </div>
     </div>

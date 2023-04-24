@@ -1,10 +1,19 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-const Header = () => {
+const Header = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
-    e.preventdefault()
+    e.preventDefault();
+    if (searchQuery.trim() !== "") {
+      onSearch(searchQuery);
+      navigate(`search?q=${searchQuery}`)
+      setSearchQuery(""); // clear the input field after search
+    }
   }
+
   return (
     <div className="header">
       <div className="header__container">
@@ -16,7 +25,8 @@ const Header = () => {
         <form onSubmit={handleSubmit}>
           <input type="search"
             placeholder="Search for a movie..."
-
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button type="submit">Search</button>
         </form>
