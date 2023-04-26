@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MovieContext } from '../contexts/MovieContext';
+// import { MovieContext } from '../contexts/MovieContext';
 import axios from 'axios';
 import '../styles/movie.scss'
 
@@ -66,9 +66,9 @@ const Movie = () => {
                 width="560"
                 height="315"
                 src={`https://www.youtube.com/embed/${trailerKey}`}
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
+                frameBorder="0"
+                allowFullScreen="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                // allowFullscreen
               />
             ) : (
               <p>No trailer available.</p>

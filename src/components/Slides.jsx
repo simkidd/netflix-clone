@@ -11,13 +11,13 @@ const Slides = ({ movies }) => {
         infinite: false,
         speed: 500,
         slidesToShow: 6,
-        slidesToScroll: 1,
+        slidesToScroll: 6,
         responsive: [
             {
                 breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 1
+                    slidesToScroll: 2
                 }
             },
         ]
